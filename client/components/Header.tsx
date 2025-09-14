@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Crown, Scale, Menu, X, Heart, Beaker } from "lucide-react";
 
 export function Header() {
@@ -55,10 +54,7 @@ export function Header() {
                 <Link key={item.name} to={item.href} className={classes}>
                   <Icon className="w-6 h-6" />
                   {item.name}
-                  {item.name === "Quiz" && (
-                    <Badge className="ml-1 bg-gold-600 text-black-950">Start here</Badge>
-                  )}
-                </Link>
+                                  </Link>
               );
             })}
           </nav>
@@ -104,10 +100,7 @@ export function Header() {
                   >
                     <Icon className="w-6 h-6" />
                     {item.name}
-                    {emphasized && (
-                      <Badge className="ml-1 bg-gold-600 text-black-950">Start here</Badge>
-                    )}
-                  </Link>
+                                      </Link>
                 );
               })}
             </div>
