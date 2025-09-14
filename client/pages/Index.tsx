@@ -32,6 +32,9 @@ export default function Index() {
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("name");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const currentPage = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
   const filteredAndSortedPerfumes = useMemo(() => {
     const filtered = perfumes.filter((perfume) => {
