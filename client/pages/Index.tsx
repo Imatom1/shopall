@@ -201,7 +201,7 @@ export default function Index() {
       {/* Main Content */}
       <div className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 flex flex-col">
         {/* Perfume Grid */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col">
           {filteredAndSortedPerfumes.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-md mx-auto px-4">
