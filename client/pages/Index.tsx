@@ -143,6 +143,23 @@ export default function Index() {
     return sorted;
   }, [filters, sortBy]);
 
+  // 4-page pagination derived from current results
+  const total = filteredAndSortedPerfumes.length;
+  const perPage = Math.max(1, Math.ceil(total / 4));
+  const totalPages = Math.max(1, Math.min(4, Math.ceil(total / perPage)));
+  const safePage = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (safePage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const pageItems = filteredAndSortedPerfumes.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    if (currentPage !== safePage) {
+      const next = new URLSearchParams(searchParams);
+      next.set("page", String(safePage));
+      setSearchParams(next, { replace: true });
+    }
+  }, [currentPage, safePage, searchParams, setSearchParams]);
+
   const handlePerfumeClick = (perfume: Perfume) => {
     console.log("Perfume clicked:", perfume.name);
     setSelectedPerfume(perfume);
@@ -213,7 +230,7 @@ export default function Index() {
 
               <div className="flex-1">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-48 sm:pb-56 md:pb-64">
-                  {filteredAndSortedPerfumes.map((perfume) => (
+                  {pageItems.map((perfume) => (
                     <CompactPerfumeCard
                       key={perfume.id}
                       perfume={perfume}
@@ -221,6 +238,57 @@ export default function Index() {
                     />
                   ))}
                 </div>
+
+              {/* Pagination */}
+              <div className="mt-6">
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href={`?page=${Math.max(1, safePage - 1)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const next = new URLSearchParams(searchParams);
+                          next.set("page", String(Math.max(1, safePage - 1)));
+                          setSearchParams(next);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      />
+                    </PaginationItem>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                      <PaginationItem key={p}>
+                        <PaginationLink
+                          href={`?page=${p}`}
+                          isActive={p === safePage}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const next = new URLSearchParams(searchParams);
+                            next.set("page", String(p));
+                            setSearchParams(next);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                        >
+                          {p}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        href={`?page=${Math.min(totalPages, safePage + 1)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const next = new URLSearchParams(searchParams);
+                          next.set("page", String(Math.min(totalPages, safePage + 1)));
+                          setSearchParams(next);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
               </div>
             </>
           )}
