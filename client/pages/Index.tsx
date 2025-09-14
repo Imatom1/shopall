@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { PerfumeCard } from "../components/PerfumeCard";
 import { PerfumeDetail } from "../components/PerfumeDetail";
