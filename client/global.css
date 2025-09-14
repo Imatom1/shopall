@@ -100,19 +100,29 @@
     @apply border-border;
   }
 
-  html, body, #root {
+  html {
+    height: -webkit-fill-available;
+  }
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+  #root {
+    min-height: 100svh;
     min-height: 100dvh;
   }
 
   body {
     @apply bg-background text-foreground overflow-x-hidden;
+    min-height: -webkit-fill-available;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
 /* Disable rubber-band (bouncy) scroll */
 @layer base {
-  html, body, #root {
-    overscroll-behavior: none;
+  body {
     overscroll-behavior-y: none;
   }
 }
