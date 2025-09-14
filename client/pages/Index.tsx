@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { PerfumeCard } from "../components/PerfumeCard";
 import { PerfumeDetail } from "../components/PerfumeDetail";
@@ -9,6 +9,14 @@ import { CompactPerfumeCard } from "../components/CompactPerfumeCard";
 import { PricingBanner } from "../components/PricingBanner";
 import { perfumes, Perfume } from "../data/perfumes";
 import { Sparkles } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const initialFilters: FilterState = {
   search: "",
@@ -24,6 +32,9 @@ export default function Index() {
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("name");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = parseInt(searchParams.get("page") || "1", 10);
+  const currentPage = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
   const filteredAndSortedPerfumes = useMemo(() => {
     const filtered = perfumes.filter((perfume) => {
@@ -135,6 +146,23 @@ export default function Index() {
     return sorted;
   }, [filters, sortBy]);
 
+  // 4-page pagination derived from current results
+  const total = filteredAndSortedPerfumes.length;
+  const perPage = Math.max(1, Math.ceil(total / 4));
+  const totalPages = Math.max(1, Math.min(4, Math.ceil(total / perPage)));
+  const safePage = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (safePage - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const pageItems = filteredAndSortedPerfumes.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    if (currentPage !== safePage) {
+      const next = new URLSearchParams(searchParams);
+      next.set("page", String(safePage));
+      setSearchParams(next, { replace: true });
+    }
+  }, [currentPage, safePage, searchParams, setSearchParams]);
+
   const handlePerfumeClick = (perfume: Perfume) => {
     console.log("Perfume clicked:", perfume.name);
     setSelectedPerfume(perfume);
@@ -152,7 +180,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
       <Header />
 
       {/* Pricing Banner */}
@@ -171,9 +199,9 @@ export default function Index() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 flex flex-col overflow-hidden">
+      <div className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 flex flex-col">
         {/* Perfume Grid */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col">
           {filteredAndSortedPerfumes.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center max-w-md mx-auto px-4">
@@ -203,9 +231,9 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-4">
-                  {filteredAndSortedPerfumes.map((perfume) => (
+              <div className="flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-6 sm:pb-8 md:pb-10">
+                  {pageItems.map((perfume) => (
                     <CompactPerfumeCard
                       key={perfume.id}
                       perfume={perfume}
@@ -213,6 +241,57 @@ export default function Index() {
                     />
                   ))}
                 </div>
+
+              {/* Pagination */}
+              <div className="mt-6">
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href={`?page=${Math.max(1, safePage - 1)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const next = new URLSearchParams(searchParams);
+                          next.set("page", String(Math.max(1, safePage - 1)));
+                          setSearchParams(next);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      />
+                    </PaginationItem>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                      <PaginationItem key={p}>
+                        <PaginationLink
+                          href={`?page=${p}`}
+                          isActive={p === safePage}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const next = new URLSearchParams(searchParams);
+                            next.set("page", String(p));
+                            setSearchParams(next);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                          }}
+                        >
+                          {p}
+                        </PaginationLink>
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        href={`?page=${Math.min(totalPages, safePage + 1)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const next = new URLSearchParams(searchParams);
+                          next.set("page", String(Math.min(totalPages, safePage + 1)));
+                          setSearchParams(next);
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              </div>
               </div>
             </>
           )}
