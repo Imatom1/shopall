@@ -100,37 +100,12 @@
     @apply border-border;
   }
 
+  html, body, #root {
+    min-height: 100dvh;
+  }
+
   body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* Fixed app height on phone screens */
-@layer utilities {
-  @media (max-width: 767px) {
-    html, body, #root {
-      height: 1000px !important;
-      min-height: 1000px !important;
-    }
-    .h-screen {
-      height: 1000px !important;
-    }
-    .min-h-screen {
-      min-height: 1000px !important;
-    }
-  }
-}
-
-/* Cap app height on larger screens to avoid vertical scaling */
-@layer utilities {
-  @media (min-width: 768px) {
-    .h-screen {
-      height: min(100vh, 1000px) !important;
-    }
-    .min-h-screen {
-      min-height: min(100vh, 1000px) !important;
-      height: min(100vh, 1000px) !important;
-    }
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 
@@ -139,5 +114,16 @@
   html, body, #root {
     overscroll-behavior: none;
     overscroll-behavior-y: none;
+  }
+}
+
+/* Make Tailwind screen utilities use modern viewport units */
+@layer utilities {
+  .h-screen { height: 100dvh !important; }
+  .min-h-screen { min-height: 100dvh !important; }
+
+  @supports (-webkit-touch-callout: none) {
+    .h-screen { height: 100svh !important; }
+    .min-h-screen { min-height: 100svh !important; }
   }
 }
