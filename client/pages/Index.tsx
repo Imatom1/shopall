@@ -180,7 +180,7 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
+    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
       <Header />
 
       {/* Pricing Banner */}
@@ -232,7 +232,7 @@ export default function Index() {
               </div>
 
               <div className="flex-1">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-48 sm:pb-56 md:pb-64">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-6 sm:pb-8 md:pb-10">
                   {pageItems.map((perfume) => (
                     <CompactPerfumeCard
                       key={perfume.id}
