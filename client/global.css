@@ -141,10 +141,3 @@
     overscroll-behavior-y: none;
   }
 }
-
-/* Prevent inner scrollers from propagating overscroll */
-@layer utilities {
-  .overflow-y-auto {
-    overscroll-behavior: contain;
-  }
-}
