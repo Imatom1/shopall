@@ -9,6 +9,14 @@ import { CompactPerfumeCard } from "../components/CompactPerfumeCard";
 import { PricingBanner } from "../components/PricingBanner";
 import { perfumes, Perfume } from "../data/perfumes";
 import { Sparkles } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const initialFilters: FilterState = {
   search: "",
