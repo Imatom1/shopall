@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 8%;
+    --foreground: 45 95% 88%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 45 95% 88%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 45 95% 88%;
+
+    --primary: 45 95% 55%;
+    --primary-foreground: 0 0% 8%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 45 95% 88%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 45 50% 70%;
+
+    --accent: 45 95% 65%;
+    --accent-foreground: 0 0% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 45 95% 88%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 16%;
+    --ring: 45 95% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 5%;
+
+    --sidebar-foreground: 45 95% 88%;
+
+    --sidebar-primary: 45 95% 55%;
+
+    --sidebar-primary-foreground: 0 0% 8%;
+
+    --sidebar-accent: 0 0% 12%;
+
+    --sidebar-accent-foreground: 45 95% 88%;
+
+    --sidebar-border: 0 0% 18%;
+
+    --sidebar-ring: 45 95% 55%;
+  }
+
+  .dark {
+    --background: 0 0% 3%;
+    --foreground: 45 95% 92%;
+
+    --card: 0 0% 6%;
+    --card-foreground: 45 95% 92%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 45 95% 92%;
+
+    --primary: 45 95% 60%;
+    --primary-foreground: 0 0% 3%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 45 95% 92%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 45 70% 75%;
+
+    --accent: 45 95% 70%;
+    --accent-foreground: 0 0% 3%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 45 95% 92%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 45 95% 60%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 45 95% 92%;
+    --sidebar-primary: 45 95% 60%;
+    --sidebar-primary-foreground: 0 0% 3%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 45 95% 92%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 45 95% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Fixed app height on phone screens */
+@layer utilities {
+  @media (max-width: 767px) {
+    html, body, #root {
+      height: 1000px !important;
+      min-height: 1000px !important;
+    }
+    .h-screen {
+      height: 1000px !important;
+    }
+    .min-h-screen {
+      min-height: 1000px !important;
+    }
+  }
+}
+
+/* Cap app height on larger screens to avoid vertical scaling */
+@layer utilities {
+  @media (min-width: 768px) {
+    .h-screen {
+      height: min(100vh, 1000px) !important;
+    }
+    .min-h-screen {
+      min-height: min(100vh, 1000px) !important;
+      height: min(100vh, 1000px) !important;
+    }
+  }
+}
