@@ -152,7 +152,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
       <Header />
 
       {/* Pricing Banner */}
@@ -171,7 +171,7 @@ export default function Index() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 flex flex-col overflow-hidden">
+      <div className="flex-1 max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 md:py-5 flex flex-col">
         {/* Perfume Grid */}
         <div className="flex-1 flex flex-col overflow-hidden">
           {filteredAndSortedPerfumes.length === 0 ? (
@@ -203,7 +203,7 @@ export default function Index() {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-48 sm:pb-56 md:pb-64">
                   {filteredAndSortedPerfumes.map((perfume) => (
                     <CompactPerfumeCard
