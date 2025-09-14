@@ -204,7 +204,7 @@ export default function Index() {
               </div>
 
               <div className="flex-1 overflow-y-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 pb-48 sm:pb-56 md:pb-64">
                   {filteredAndSortedPerfumes.map((perfume) => (
                     <CompactPerfumeCard
                       key={perfume.id}
