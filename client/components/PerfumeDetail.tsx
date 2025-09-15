@@ -33,6 +33,10 @@ export function PerfumeDetail({
 }: PerfumeDetailProps) {
   if (!open || !perfume) return null;
 
+  const safeTop = anchorY != null && typeof window !== "undefined"
+    ? Math.max(8, Math.min(window.innerHeight - 8, anchorY))
+    : undefined;
+
   return (
     <div className="fixed inset-0 z-50 p-2 sm:p-4">
       {/* Backdrop */}
@@ -47,9 +51,9 @@ export function PerfumeDetail({
 
       {/* Modal Content */}
       <div
-        className="fixed left-1/2 -translate-x-1/2 bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 rounded-lg shadow-2xl w-[calc(100%-1rem)] sm:w-full max-w-lg max-h-[75vh] overflow-hidden flex flex-col
-        before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform"
-        style={{ top: anchorY != null ? Math.max(8, Math.min(window.innerHeight - 8, anchorY)) : undefined }}
+        className={`fixed left-1/2 -translate-x-1/2 ${safeTop == null ? "top-1/2 -translate-y-1/2" : ""} bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 rounded-lg shadow-2xl w-[calc(100%-1rem)] sm:w-full max-w-lg max-h-[75vh] overflow-hidden flex flex-col
+        before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform`}
+        style={{ top: safeTop ?? undefined }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
