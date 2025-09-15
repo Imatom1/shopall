@@ -2,10 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Droplets, Star } from "lucide-react";
 import { Perfume } from "../data/perfumes";
+import type React from "react";
 
 interface CompactPerfumeCardProps {
   perfume: Perfume;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export function CompactPerfumeCard({

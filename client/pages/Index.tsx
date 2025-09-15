@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import type React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { PerfumeCard } from "../components/PerfumeCard";
@@ -31,6 +32,7 @@ export default function Index() {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("name");
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = parseInt(searchParams.get("page") || "1", 10);
@@ -163,8 +165,15 @@ export default function Index() {
     }
   }, [currentPage, safePage, searchParams, setSearchParams]);
 
-  const handlePerfumeClick = (perfume: Perfume) => {
+  const handlePerfumeClick = (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => {
     console.log("Perfume clicked:", perfume.name);
+    const target = e?.currentTarget as HTMLElement | undefined;
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setDetailAnchorY(rect.top);
+    } else {
+      setDetailAnchorY(null);
+    }
     setSelectedPerfume(perfume);
     setIsDetailOpen(true);
     console.log("Modal should be open now");
@@ -180,7 +189,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
       <Header />
 
       {/* Pricing Banner */}
@@ -237,7 +246,7 @@ export default function Index() {
                     <CompactPerfumeCard
                       key={perfume.id}
                       perfume={perfume}
-                      onClick={() => handlePerfumeClick(perfume)}
+                      onClick={(e) => handlePerfumeClick(perfume, e)}
                     />
                   ))}
                 </div>
@@ -302,9 +311,13 @@ export default function Index() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
         onCompare={handleCompare}
         isInComparison={false}
+        anchorY={detailAnchorY}
       />
     </div>
   );

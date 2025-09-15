@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import type React from "react";
 import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ export default function Compare() {
   const [comparisonList, setComparisonList] = useState<Perfume[]>([]);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
   const [seasonFilter, setSeasonFilter] = useState("");
@@ -69,7 +71,14 @@ export default function Compare() {
     }
   };
 
-  const handlePerfumeClick = (perfume: Perfume) => {
+  const handlePerfumeClick = (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => {
+    const target = e?.currentTarget as HTMLElement | undefined;
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setDetailAnchorY(rect.top);
+    } else {
+      setDetailAnchorY(null);
+    }
     setSelectedPerfume(perfume);
     setIsDetailOpen(true);
   };
@@ -353,11 +362,11 @@ export default function Compare() {
                         <div key={perfume.id} className="relative">
                           <CompactPerfumeCard
                             perfume={perfume}
-                            onClick={() => {
+                            onClick={(e) => {
                               if (comparisonList.length < 3) {
                                 addToComparison(perfume);
                               } else {
-                                handlePerfumeClick(perfume);
+                                handlePerfumeClick(perfume, e);
                               }
                             }}
                           />
@@ -376,13 +385,17 @@ export default function Compare() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
         onCompare={addToComparison}
         isInComparison={
           selectedPerfume
             ? comparisonList.some((p) => p.id === selectedPerfume.id)
             : false
         }
+        anchorY={detailAnchorY}
       />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -321,6 +322,7 @@ export default function Quiz() {
   const [recommendations, setRecommendations] = useState<Perfume[]>([]);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
 
   // Check if user came from intro page or has started the quiz
   const hasStartedQuiz = answers.length > 0 || showResults;
@@ -404,7 +406,14 @@ export default function Quiz() {
     setRecommendations([]);
   };
 
-  const handlePerfumeClick = (perfume: Perfume) => {
+  const handlePerfumeClick = (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => {
+    const target = e?.currentTarget as HTMLElement | undefined;
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setDetailAnchorY(rect.top);
+    } else {
+      setDetailAnchorY(null);
+    }
     setSelectedPerfume(perfume);
     setIsDetailOpen(true);
   };
@@ -551,7 +560,7 @@ export default function Quiz() {
                       <Card
                         key={perfume.id}
                         className="border-gold-300 bg-gradient-to-br from-black-800 to-black-800 hover:from-black-700 hover:to-black-600 transition-all cursor-pointer group"
-                        onClick={() => handlePerfumeClick(perfume)}
+                        onClick={(e) => handlePerfumeClick(perfume, e)}
                       >
                         <CardContent className="p-3 sm:p-4 md:p-5">
                           <div className="space-y-2 sm:space-y-3">
@@ -642,7 +651,11 @@ export default function Quiz() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
+        anchorY={detailAnchorY}
       />
     </div>
   );
