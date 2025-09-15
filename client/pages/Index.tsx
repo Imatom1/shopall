@@ -180,7 +180,7 @@ export default function Index() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-black-950 via-black-900 to-black-800 flex flex-col">
       <Header />
 
       {/* Pricing Banner */}
