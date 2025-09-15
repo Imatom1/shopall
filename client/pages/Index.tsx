@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import type React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { PerfumeCard } from "../components/PerfumeCard";
