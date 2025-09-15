@@ -559,7 +559,7 @@ export default function Quiz() {
                       <Card
                         key={perfume.id}
                         className="border-gold-300 bg-gradient-to-br from-black-800 to-black-800 hover:from-black-700 hover:to-black-600 transition-all cursor-pointer group"
-                        onClick={() => handlePerfumeClick(perfume)}
+                        onClick={(e) => handlePerfumeClick(perfume, e)}
                       >
                         <CardContent className="p-3 sm:p-4 md:p-5">
                           <div className="space-y-2 sm:space-y-3">
