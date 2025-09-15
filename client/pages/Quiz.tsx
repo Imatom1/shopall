@@ -321,6 +321,7 @@ export default function Quiz() {
   const [recommendations, setRecommendations] = useState<Perfume[]>([]);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
 
   // Check if user came from intro page or has started the quiz
   const hasStartedQuiz = answers.length > 0 || showResults;
