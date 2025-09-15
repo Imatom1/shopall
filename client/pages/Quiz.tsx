@@ -405,7 +405,14 @@ export default function Quiz() {
     setRecommendations([]);
   };
 
-  const handlePerfumeClick = (perfume: Perfume) => {
+  const handlePerfumeClick = (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => {
+    const target = e?.currentTarget as HTMLElement | undefined;
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setDetailAnchorY(rect.top);
+    } else {
+      setDetailAnchorY(null);
+    }
     setSelectedPerfume(perfume);
     setIsDetailOpen(true);
   };
