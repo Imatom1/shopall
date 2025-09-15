@@ -361,11 +361,11 @@ export default function Compare() {
                         <div key={perfume.id} className="relative">
                           <CompactPerfumeCard
                             perfume={perfume}
-                            onClick={() => {
+                            onClick={(e) => {
                               if (comparisonList.length < 3) {
                                 addToComparison(perfume);
                               } else {
-                                handlePerfumeClick(perfume);
+                                handlePerfumeClick(perfume, e);
                               }
                             }}
                           />
