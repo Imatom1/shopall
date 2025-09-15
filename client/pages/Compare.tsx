@@ -384,13 +384,17 @@ export default function Compare() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
         onCompare={addToComparison}
         isInComparison={
           selectedPerfume
             ? comparisonList.some((p) => p.id === selectedPerfume.id)
             : false
         }
+        anchorY={detailAnchorY}
       />
     </div>
   );
