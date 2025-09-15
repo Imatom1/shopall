@@ -650,7 +650,11 @@ export default function Quiz() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
+        anchorY={detailAnchorY}
       />
     </div>
   );
