@@ -25,6 +25,7 @@ export default function Compare() {
   const [comparisonList, setComparisonList] = useState<Perfume[]>([]);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
   const [seasonFilter, setSeasonFilter] = useState("");
