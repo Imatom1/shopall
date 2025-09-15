@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { X, Eye, Clock, Droplets, Star, ArrowLeftRight } from "lucide-react";
 import { Perfume } from "../data/perfumes";
 
+import type React from "react";
 interface ComparisonCardsProps {
   perfumes: Perfume[];
   onRemove: (perfumeId: string) => void;
-  onViewDetails: (perfume: Perfume) => void;
+  onViewDetails: (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => void;
 }
 
 export function ComparisonCards({
@@ -324,7 +325,7 @@ export function ComparisonCards({
                 <div key={perfume.id} className="contents">
                   <Button
                     variant="outline"
-                    onClick={() => onViewDetails(perfume)}
+                    onClick={(e) => onViewDetails(perfume, e)}
                     className="w-full border-gold-500 bg-black-800 text-gold-300 hover:bg-gold-600 font-semibold text-xs h-8"
                   >
                     <Eye className="w-3 h-3 mr-1" />
