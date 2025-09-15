@@ -20,6 +20,7 @@ interface PerfumeDetailProps {
   onOpenChange: (open: boolean) => void;
   onCompare?: (perfume: Perfume) => void;
   isInComparison?: boolean;
+  anchorY?: number | null;
 }
 
 export function PerfumeDetail({
@@ -28,11 +29,12 @@ export function PerfumeDetail({
   onOpenChange,
   onCompare,
   isInComparison,
+  anchorY,
 }: PerfumeDetailProps) {
   if (!open || !perfume) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+    <div className="fixed inset-0 z-50 p-2 sm:p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -45,8 +47,9 @@ export function PerfumeDetail({
 
       {/* Modal Content */}
       <div
-        className="relative bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 rounded-lg shadow-2xl w-full max-w-lg max-h-[75vh] overflow-hidden flex flex-col
+        className="fixed left-1/2 -translate-x-1/2 bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 rounded-lg shadow-2xl w-[calc(100%-1rem)] sm:w-full max-w-lg max-h-[75vh] overflow-hidden flex flex-col
         before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/5 before:to-transparent before:translate-x-[-200%] before:animate-shimmer before:transition-transform"
+        style={{ top: anchorY != null ? Math.max(8, Math.min(window.innerHeight - 8, anchorY)) : undefined }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
