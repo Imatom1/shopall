@@ -31,6 +31,7 @@ export default function Index() {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [detailAnchorY, setDetailAnchorY] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("name");
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = parseInt(searchParams.get("page") || "1", 10);
@@ -163,8 +164,15 @@ export default function Index() {
     }
   }, [currentPage, safePage, searchParams, setSearchParams]);
 
-  const handlePerfumeClick = (perfume: Perfume) => {
+  const handlePerfumeClick = (perfume: Perfume, e?: React.MouseEvent<HTMLElement>) => {
     console.log("Perfume clicked:", perfume.name);
+    const target = e?.currentTarget as HTMLElement | undefined;
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      setDetailAnchorY(rect.top);
+    } else {
+      setDetailAnchorY(null);
+    }
     setSelectedPerfume(perfume);
     setIsDetailOpen(true);
     console.log("Modal should be open now");
@@ -237,7 +245,7 @@ export default function Index() {
                     <CompactPerfumeCard
                       key={perfume.id}
                       perfume={perfume}
-                      onClick={() => handlePerfumeClick(perfume)}
+                      onClick={(e) => handlePerfumeClick(perfume, e)}
                     />
                   ))}
                 </div>
@@ -302,9 +310,13 @@ export default function Index() {
       <PerfumeDetail
         perfume={selectedPerfume}
         open={isDetailOpen}
-        onOpenChange={setIsDetailOpen}
+        onOpenChange={(open) => {
+          if (!open) setDetailAnchorY(null);
+          setIsDetailOpen(open);
+        }}
         onCompare={handleCompare}
         isInComparison={false}
+        anchorY={detailAnchorY}
       />
     </div>
   );
