@@ -28,6 +28,7 @@ import {
   Sparkles,
   Crown,
   ArrowLeft,
+  ArrowUp,
   Plus,
   Minus,
   Search,
@@ -69,6 +70,17 @@ export default function PerfumeMixer() {
     bestTime: "",
     mainAccord: "",
   });
+
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const roundPercentage = (num: number) => Math.round(num * 100) / 100;
 
@@ -923,6 +935,18 @@ export default function PerfumeMixer() {
           </div>
         </div>
       </div>
+      {showScrollTop && (
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-4 right-4 z-50 border-gold-400 text-gold-300 bg-black-800 hover:bg-black-700"
+          variant="outline"
+          size="sm"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-4 h-4 mr-1" />
+          Top
+        </Button>
+      )}
     </div>
   );
 }
