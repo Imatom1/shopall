@@ -52,7 +52,13 @@ export function Header() {
 
               return (
                 <Link key={item.name} to={item.href} className={classes}>
-                  <Icon className="w-6 h-6" />
+                  {item.name === "Quiz" ? (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-gold-500 bg-black-950">
+                      <Icon className="w-4 h-4 text-gold-500" />
+                    </span>
+                  ) : (
+                    <Icon className="w-6 h-6" />
+                  )}
                   {item.name}
                                   </Link>
               );
@@ -98,7 +104,13 @@ export function Header() {
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
                   >
+                    {item.name === "Quiz" ? (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-gold-500 bg-black-950">
+                      <Icon className="w-4 h-4 text-gold-500" />
+                    </span>
+                  ) : (
                     <Icon className="w-6 h-6" />
+                  )}
                     {item.name}
                                       </Link>
                 );
