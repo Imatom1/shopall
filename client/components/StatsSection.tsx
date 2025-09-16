@@ -19,7 +19,7 @@ export function StatsSection() {
     {
       icon: Heart,
       label: "Starting From",
-      value: "$29.99",
+      value: "$35",
       description: "Unbeatable prices",
     },
     {
