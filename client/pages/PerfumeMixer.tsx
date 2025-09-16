@@ -28,6 +28,7 @@ import {
   Sparkles,
   Crown,
   ArrowLeft,
+  ArrowUp,
   Plus,
   Minus,
   Search,
@@ -69,6 +70,17 @@ export default function PerfumeMixer() {
     bestTime: "",
     mainAccord: "",
   });
+
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const roundPercentage = (num: number) => Math.round(num * 100) / 100;
 
@@ -430,9 +442,9 @@ export default function PerfumeMixer() {
       </div>
 
       <div className="flex-1 max-w-7xl mx-auto px-1 sm:px-2 md:px-3 py-1 sm:py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
           {/* Left Panel - Mixer */}
-          <div className="lg:col-span-2 flex flex-col min-h-[400px] mb-4 lg:mb-0">
+          <div className="flex flex-col min-h-[400px] mb-4">
             <Card className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 shadow-lg flex-1 flex flex-col">
               <CardHeader className="p-1.5 sm:p-2 flex-shrink-0">
                 <CardTitle className="text-sm sm:text-base font-bold text-gold-300 flex items-center justify-between">
@@ -454,7 +466,7 @@ export default function PerfumeMixer() {
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="p-1.5 sm:p-2 flex-1 max-h-[60vh] lg:max-h-none overflow-y-auto">
+              <CardContent className="p-1.5 sm:p-2">
                 {/* Ingredients List */}
                 <div className="space-y-1">
                   {ingredients.length === 0 ? (
@@ -848,7 +860,7 @@ export default function PerfumeMixer() {
                 </div>
               </CardHeader>
 
-              <CardContent className="p-2 sm:p-3 flex-1 max-h-[50vh] lg:max-h-none overflow-y-auto">
+              <CardContent className="p-2 sm:p-3">
                 {!canAddMore ? (
                   <div className="text-center py-8">
                     <Crown className="w-12 h-12 text-gold-400 mx-auto mb-2" />
@@ -923,6 +935,18 @@ export default function PerfumeMixer() {
           </div>
         </div>
       </div>
+      {showScrollTop && (
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-4 right-4 z-50 border-gold-400 text-gold-300 bg-black-800 hover:bg-black-700"
+          variant="outline"
+          size="sm"
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-4 h-4 mr-1" />
+          Top
+        </Button>
+      )}
     </div>
   );
 }
