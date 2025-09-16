@@ -43,10 +43,7 @@ export function Header() {
               const isActive = item.href === location.pathname;
 
               const base = "flex items-center gap-2 px-3 py-2 rounded-lg font-semibold transition-all duration-200";
-              const emphasized = item.name === "Quiz";
-              const classes = emphasized
-                ? `${base} bg-gold-500 text-black-950 shadow-md`
-                : isActive
+              const classes = isActive
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
                 : `${base} text-gold-300 hover:bg-gold-600 hover:text-black-950`;
 
@@ -97,9 +94,7 @@ export function Header() {
                     to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-semibold transition-colors ${
-                      emphasized
-                        ? "bg-gold-500 text-black-950"
-                        : isActive
+                      isActive
                         ? "bg-gold-500 text-black-950"
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
