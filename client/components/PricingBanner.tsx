@@ -21,7 +21,7 @@ export function PricingBanner() {
                 30ml:
               </span>
               <Badge className="bg-gold-600 text-black-950 font-bold text-xs">
-                $29.99
+                $35
               </Badge>
             </div>
             <div className="flex items-center gap-1">
@@ -37,7 +37,7 @@ export function PricingBanner() {
                 100ml:
               </span>
               <Badge className="bg-gold-600 text-black-950 font-bold text-xs">
-                $74.99
+                $70
               </Badge>
             </div>
           </div>
