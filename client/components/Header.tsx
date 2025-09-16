@@ -86,7 +86,7 @@ export function Header() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.href === location.pathname;
-                const emphasized = item.name === "Quiz";
+                
 
                 return (
                   <Link
