@@ -454,7 +454,7 @@ export default function PerfumeMixer() {
                 </CardTitle>
               </CardHeader>
 
-              <CardContent className="p-1.5 sm:p-2 flex-1 max-h-[60vh] lg:max-h-none overflow-y-auto">
+              <CardContent className="p-1.5 sm:p-2">
                 {/* Ingredients List */}
                 <div className="space-y-1">
                   {ingredients.length === 0 ? (
@@ -848,7 +848,7 @@ export default function PerfumeMixer() {
                 </div>
               </CardHeader>
 
-              <CardContent className="p-2 sm:p-3 flex-1 max-h-[50vh] lg:max-h-none overflow-y-auto">
+              <CardContent className="p-2 sm:p-3">
                 {!canAddMore ? (
                   <div className="text-center py-8">
                     <Crown className="w-12 h-12 text-gold-400 mx-auto mb-2" />
