@@ -430,9 +430,9 @@ export default function PerfumeMixer() {
       </div>
 
       <div className="flex-1 max-w-7xl mx-auto px-1 sm:px-2 md:px-3 py-1 sm:py-2">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
+        <div className="grid grid-cols-1 gap-1 sm:gap-2 min-h-[calc(100vh-8rem)]">
           {/* Left Panel - Mixer */}
-          <div className="lg:col-span-2 flex flex-col min-h-[400px] mb-4 lg:mb-0">
+          <div className="flex flex-col min-h-[400px] mb-4">
             <Card className="bg-gradient-to-br from-black-800 via-black-800 to-black-700 border border-gold-400 shadow-lg flex-1 flex flex-col">
               <CardHeader className="p-1.5 sm:p-2 flex-shrink-0">
                 <CardTitle className="text-sm sm:text-base font-bold text-gold-300 flex items-center justify-between">
