@@ -23,7 +23,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16 sm:h-18 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link to="/" className="flex items-center gap-2 group" onClick={(e) => { e.preventDefault(); window.location.reload(); }}>
               <Crown className="w-8 h-8 text-gold-500 group-hover:text-gold-400 transition-colors" />
               <div className="flex flex-col">
                 <span className="text-xl font-bold bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 bg-clip-text text-transparent">
@@ -43,16 +43,19 @@ export function Header() {
               const isActive = item.href === location.pathname;
 
               const base = "flex items-center gap-2 px-3 py-2 rounded-lg font-semibold transition-all duration-200";
-              const emphasized = item.name === "Quiz";
-              const classes = emphasized
-                ? `${base} bg-gold-500 text-black-950 shadow-md`
-                : isActive
+              const classes = isActive
                 ? `${base} bg-gold-500 text-black-950 shadow-md`
                 : `${base} text-gold-300 hover:bg-gold-600 hover:text-black-950`;
 
               return (
                 <Link key={item.name} to={item.href} className={classes}>
-                  <Icon className="w-6 h-6" />
+                  {item.name === "Quiz" ? (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-gold-500 bg-black-950">
+                      <Icon className="w-4 h-4 text-gold-500" />
+                    </span>
+                  ) : (
+                    <Icon className="w-6 h-6" />
+                  )}
                   {item.name}
                                   </Link>
               );
@@ -83,7 +86,7 @@ export function Header() {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.href === location.pathname;
-                const emphasized = item.name === "Quiz";
+                
 
                 return (
                   <Link
@@ -91,14 +94,18 @@ export function Header() {
                     to={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-semibold transition-colors ${
-                      emphasized
-                        ? "bg-gold-500 text-black-950"
-                        : isActive
+                      isActive
                         ? "bg-gold-500 text-black-950"
                         : "text-gold-300 hover:bg-gold-600 hover:text-black-950"
                     }`}
                   >
+                    {item.name === "Quiz" ? (
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full border-2 border-gold-500 bg-black-950">
+                      <Icon className="w-4 h-4 text-gold-500" />
+                    </span>
+                  ) : (
                     <Icon className="w-6 h-6" />
+                  )}
                     {item.name}
                                       </Link>
                 );
